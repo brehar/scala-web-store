@@ -1,0 +1,39 @@
+GET     /                           controllers.HomeController.index
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+GET     /product                    controllers.ProductController.index
+GET     /product/add                controllers.ProductController.blank
+POST    /product                    controllers.ProductController.insert
+POST    /product/:id                controllers.ProductController.update(id: Long)
+POST    /product/:id/remove         controllers.ProductController.remove(id: Long)
+GET     /product/details/:id        controllers.ProductController.details(id: Long)
+
+GET     /review                     controllers.ReviewController.index
+GET     /review/add                 controllers.ReviewController.blank
+POST    /review                     controllers.ReviewController.insert
+POST    /review/:id                 controllers.ReviewController.update(id: Long)
+POST    /review/:id/remove          controllers.ReviewController.remove(id: Long)
+GET     /review/details/:id         controllers.ReviewController.details(id: Long)
+
+GET     /image                      controllers.ImageController.index
+GET     /image/add                  controllers.ImageController.blank
+POST    /image                      controllers.ImageController.insert
+POST    /image/:id                  controllers.ImageController.update(id: Long)
+POST    /image/:id/remove           controllers.ImageController.remove(id: Long)
+GET     /image/details/:id          controllers.ImageController.details(id: Long)
+
+GET     /rx/prices                  controllers.RxController.prices
+GET     /rx/aprices                 controllers.RxController.pricesAsync
+
+GET     /rnd/double                 controllers.RndDoubleGeneratorController.rndDouble
+GET     /rnd/call                   controllers.RndDoubleGeneratorController.rndCall
+GET     /rnd/rx                     controllers.RndDoubleGeneratorController.rxCall
+GET     /rnd/rxbat                  controllers.RndDoubleGeneratorController.rxScalaCallBatch
+
+GET     /reports                    controllers.HomeController.reports
+GET     /product/report             controllers.ProductController.report
+GET     /review/report              controllers.ReviewController.report
+GET     /image/report               controllers.ImageController.report
+
+GET     /chat/index_socket          controllers.ChatController.index_socket
+GET     /chat/ws                    controllers.ChatController.ws

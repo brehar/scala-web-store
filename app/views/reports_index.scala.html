@@ -1,0 +1,13 @@
+@()(implicit flash: Flash)
+
+@main("Reports") {
+  <a href="/product/report">
+    <img height="42" width="42" src="@routes.Assets.at("images/product.png")" /> Products Report
+  </a><br />
+  <a href="/review/report">
+    <img height="42" width="42" src="@routes.Assets.at("images/review.png")" /> Reviews Report
+  </a><br />
+  <a href="/image/report">
+    <img height="42" width="42" src="@routes.Assets.at("images/image.png")" /> Images Report
+  </a><br />
+}

@@ -1,10 +1,14 @@
 package controllers
 
+import backpressure.LeakyBucket
 import com.google.inject.{ Inject, Singleton }
 import models.{ ImagesJson, ProductsJson, ReviewsJson }
+import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc.{ Action, AnyContent, Controller }
 import services.{ ImageService, ProductService, ReviewService }
 import utils.Awaits
+
+import scala.concurrent.duration._
 
 @Singleton
 class RestApiController @Inject()(
@@ -26,10 +30,18 @@ class RestApiController @Inject()(
     Ok(json)
   }
 
-  def listAllImages: Action[AnyContent] = Action { implicit request =>
+  var bucket = new LeakyBucket(5, 60 seconds)
+
+  def processImages: JsValue = {
     val future = imageService.findAll()
     val images = Awaits.get(5, future)
-    val json = ImagesJson.toJson(images)
-    Ok(json)
+    ImagesJson.toJson(images)
+  }
+
+  def processFailure: JsValue = Json.toJson("Too many requests. Please try again later.")
+
+  def listAllImages: Action[AnyContent] = Action { implicit request =>
+    if (bucket.dropToBucket()) Ok(processImages)
+    else InternalServerError(processFailure.toString())
   }
 }

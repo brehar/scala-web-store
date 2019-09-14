@@ -17,3 +17,19 @@ case class Product(
 object ProductDef {
   final val toTable: String = "Product"
 }
+
+object ProductsJson {
+  import play.api.libs.functional.syntax._
+  import play.api.libs.json._
+
+  implicit val productWrites: Writes[Product] =
+    ((JsPath \ "id").write[Option[Long]] and (JsPath \ "name")
+      .write[String] and (JsPath \ "details").write[String] and (JsPath \ "price")
+      .write[BigDecimal])(unlift(Product.unapply))
+
+  implicit val productReads: Reads[Product] =
+    ((JsPath \ "id").readNullable[Long] and (JsPath \ "name").read[String] and (JsPath \ "details")
+      .read[String] and (JsPath \ "price").read[BigDecimal])(Product.apply _)
+
+  def toJson(products: Option[Seq[Product]]): JsValue = Json.toJson(products)
+}

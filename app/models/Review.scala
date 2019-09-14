@@ -17,3 +17,20 @@ case class Review(
 object ReviewDef {
   final val toTable: String = "Review"
 }
+
+object ReviewsJson {
+  import play.api.libs.functional.syntax._
+  import play.api.libs.json._
+
+  implicit val reviewWrites: Writes[Review] =
+    ((JsPath \ "id").write[Option[Long]] and (JsPath \ "productId")
+      .write[Option[Long]] and (JsPath \ "author").write[String] and (JsPath \ "comment")
+      .write[String])(unlift(Review.unapply))
+
+  implicit val reviewReads: Reads[Review] =
+    ((JsPath \ "id").readNullable[Long] and (JsPath \ "productId")
+      .readNullable[Long] and (JsPath \ "author").read[String] and (JsPath \ "comment")
+      .read[String])(Review.apply _)
+
+  def toJson(reviews: Option[Seq[Review]]): JsValue = Json.toJson(reviews)
+}

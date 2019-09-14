@@ -37,3 +37,7 @@ GET     /image/report               controllers.ImageController.report
 
 GET     /chat/index_socket          controllers.ChatController.index_socket
 GET     /chat/ws                    controllers.ChatController.ws
+
+GET     /api/product/all            controllers.RestApiController.listAllProducts
+GET     /api/review/all             controllers.RestApiController.listAllReviews
+GET     /api/image/all              controllers.RestApiController.listAllImages

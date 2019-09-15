@@ -35,7 +35,8 @@ libraryDependencies ++= Seq(
   "mysql" % "mysql-connector-java" % "6.0.3",
   "net.sf.jasperreports" % "jasperreports" % "6.2.2" withSources (),
   "net.sf.jasperreports" % "jasperreports-functions" % "6.2.2",
-  "net.sf.jasperreports" % "jasperreports-chart-themes" % "6.2.2"
+  "net.sf.jasperreports" % "jasperreports-chart-themes" % "6.2.2",
+  "io.swagger" %% "swagger-play2" % "1.5.3"
 )
 
 unmanagedResourceDirectories in Test <+= baseDirectory(_ / "target/web/public/test")
